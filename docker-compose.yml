@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  mkt-db:
+    image: postgres:13
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - db-mkt:/var/lib/postgresql/data
+    networks:
+      - mkt-net
+
+  mkt-api:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src/:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mkt-db
+    networks:
+      - mkt-net
+
+networks:
+  mkt-net:
+    driver: bridge
+
+volumes:
+  db-mkt:
