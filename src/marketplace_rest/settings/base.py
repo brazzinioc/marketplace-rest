@@ -28,12 +28,13 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-
+    'apps.users',
 ]
 
 # Lybraries
 THIRD_APPS = [
   'rest_framework',
+  'simple_history',
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'marketplace_rest.urls'
@@ -110,7 +112,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# CUSTOM AUTH USER MODEL
+AUTH_USER_MODEL = 'users.User'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+

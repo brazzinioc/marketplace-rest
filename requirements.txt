@@ -3,3 +3,4 @@ djangorestframework==3.12.4
 psycopg2>=2.8
 Pillow>=8.4.0
 pipreqs>=0.4.11
+django-simple-history>=3.0.0
