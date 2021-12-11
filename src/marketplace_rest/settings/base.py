@@ -29,6 +29,8 @@ BASE_APPS = [
 
 LOCAL_APPS = [
     'apps.users',
+    'apps.cities',
+    'apps.stores',
 ]
 
 # Lybraries
