@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
-    avatar = models.ImageField(upload_to='users/pictures', blank=True)
+    avatar = models.ImageField(upload_to='users/avatares', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
