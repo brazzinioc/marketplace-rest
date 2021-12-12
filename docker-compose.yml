@@ -22,6 +22,12 @@ services:
       - ./src/:/code
     ports:
       - "8000:8000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=mkt-db
+      - DB_PORT=5432
     depends_on:
       - mkt-db
     networks:
