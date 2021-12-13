@@ -1,15 +1,6 @@
 from django.contrib import admin
+from apps.base.models import LocationAdmin
 from apps.cities.models import City, State, Colony
-
-
-class LocationAdmin(admin.ModelAdmin):
-    list_display = []
-    list_filter = []
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.list_display = [ 'name', 'zip_code', 'created_at', 'updated_at' ]
-        self.list_filter = [ 'name', 'zip_code', 'created_at', 'updated_at' ]
 
 
 class CityAdmin(LocationAdmin):

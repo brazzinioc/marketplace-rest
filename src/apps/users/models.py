@@ -32,11 +32,11 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, name, last_name, email, password):
-        """Create a new normal user"""
+        """ Create a new normal user """
         self._create_user(name, last_name, email, False, False, password)
 
     def create_superuser(self, name, last_name, email, password):
-        """Create a new superuser"""
+        """ Create a new superuser """
         self._create_user(name, last_name, email, True, True, password)
 
 
