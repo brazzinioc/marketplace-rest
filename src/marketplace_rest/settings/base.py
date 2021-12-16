@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,8 +37,9 @@ LOCAL_APPS = [
 
 # Lybraries
 THIRD_APPS = [
-  'rest_framework',
-  'simple_history',
+    'corsheaders',
+    'rest_framework',
+    'simple_history',
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -45,6 +47,7 @@ INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -125,5 +128,28 @@ AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%b %d, %Y',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 
+# S3 STORAGE TO SAVE IMAGES FILES
+DEFAULT_FILE_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_ACCESS_KEY_ID=os.getenv('AWS_S3_ACCESS_KEY_ID')
+AWS_S3_SECRET_ACCESS_KEY=os.getenv('AWS_S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME=os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_QUERYSTRING_AUTH=False
+
+
+
+# CORS CONFIGURATION
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8080",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]

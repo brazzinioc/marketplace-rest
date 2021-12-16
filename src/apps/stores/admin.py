@@ -8,12 +8,12 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class StoreAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'slogan', 'get_categories', 'domain', 'logo', 'status', 'created_at', 'updated_at']
+    list_display = ['name', 'slug', 'slogan', 'get_categories', 'logo', 'status', 'created_at', 'updated_at']
     list_filter = [ 'name', 'slug', 'status', 'created_at', 'updated_at']
     prepopulated_fields = {'slug': ('name',)}
 
     def get_categories(self, obj):
-        return ", ".join([c.name for c in obj.category.all()])
+        return ", ".join([c.name for c in obj.categories.all()])
 
 class StoreLocationAdmin(admin.ModelAdmin):
     list_display = ['store', 'address', 'colony', 'status', 'created_at', 'updated_at']

@@ -30,9 +30,8 @@ class Store(BaseModel):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=255, unique=True)
     slogan = models.TextField(blank=True, null=True)
-    category = models.ManyToManyField(Category, related_name='category', verbose_name='Categorias')
-    domain  = models.CharField(max_length=255, blank=True, null=True)
-    logo = models.ImageField(upload_to='stores/logos', blank=True, null=True)
+    categories = models.ManyToManyField(Category, related_name='categories', verbose_name='Categorias')
+    logo = models.ImageField(upload_to='stores/logos', default='stores/logos/no-logo.png')
     historical = HistoricalRecords()
 
     def __str__(self):
@@ -55,11 +54,11 @@ class Store(BaseModel):
 class StoreLocation(BaseModel):
     address = models.TextField()
     number = models.IntegerField(blank=True, null=True)
-    reference = models.CharField(max_length=255, blank=True, null=True)
+    reference = models.TextField(blank=True, null=True)
     longitude = models.DecimalField(max_digits=18, decimal_places=15, blank=True, null=True)
     latitude = models.DecimalField(max_digits=18, decimal_places=15, blank=True, null=True)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location', verbose_name='Comercio')
-    colony = models.ForeignKey(Colony, on_delete=models.CASCADE, related_name='loc_colony', verbose_name='Colonia')
+    store = models.OneToOneField(Store, on_delete=models.CASCADE, verbose_name='Comercio')
+    colony = models.ForeignKey(Colony, on_delete=models.RESTRICT, related_name='colony', verbose_name='Colonia')
     historical = HistoricalRecords()
 
     def __str__(self):
@@ -83,7 +82,7 @@ class StoreLegalDetail(BaseModel):
     ruc = models.CharField(max_length=11, unique=True)
     razon_social = models.CharField(max_length=150)
     address = models.TextField()
-    store = models.OneToOneField(Store, on_delete=models.CASCADE, related_name='legal_details')
+    store = models.OneToOneField(Store, on_delete=models.CASCADE, verbose_name='Comercio')
     historical = HistoricalRecords()
 
     def __str__(self):
@@ -107,7 +106,7 @@ class StoreSubPage(BaseModel):
     about_us = models.TextField()
     vission = models.TextField()
     mission = models.TextField()
-    store = models.OneToOneField(Store, on_delete=models.CASCADE, related_name='sub_pages')
+    store = models.OneToOneField(Store, on_delete=models.CASCADE, verbose_name='Comercio')
     historical = HistoricalRecords()
 
     class Meta:
@@ -131,7 +130,7 @@ class StoreSocialNetwork(BaseModel):
     twitter = models.CharField(max_length=255, blank=True, null=True)
     youtube = models.CharField(max_length=255, blank=True, null=True)
     whatsapp = models.CharField(max_length=255, blank=True, null=True)
-    store = models.OneToOneField(Store, on_delete=models.CASCADE, related_name='social_networks')
+    store = models.OneToOneField(Store, on_delete=models.CASCADE, verbose_name='Comercio')
     historical = HistoricalRecords()
 
     class Meta:
